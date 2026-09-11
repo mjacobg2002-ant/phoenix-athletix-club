@@ -34,8 +34,11 @@ Commerce). The build brief warns these may be outdated. Every unverified item is
 | Social handles | Instagram / Facebook — **placeholders** | footer |
 
 ## To finish the build
-- **Photos** — replace all placeholder tiles (hero, coaching, community, facility, coaches)
-  with real Phoenix Athletix photography. Look for `PHOTO PLACEHOLDER` comments and `.ph-tag`/`.cph`/`.fph` blocks.
+- **Photos** — the site now ships with curated fitness photography placed to match each
+  section (`assets/hero.jpg`, `beginner.jpg`, `coaching.jpg`, `community-1..4.jpg`,
+  `facility-1..6.jpg`, `coach-1..3.jpg`). These are stand-ins reused from prior fitness
+  builds — **swap them for real Phoenix Athletix photos** when available (same filenames =
+  no code changes). Only the location **map** is still a placeholder, pending a verified address.
 - **Lead form** — connect `#leadForm` in `script.js` to your provider (Formspree, GoHighLevel,
   Netlify Forms…). It currently validates and shows a confirmation only, no data is sent.
 - **Map** — embed Google Maps in `.location-map` once the address is confirmed.

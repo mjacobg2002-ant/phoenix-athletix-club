@@ -101,14 +101,16 @@ a{color:inherit;text-decoration:none}
 .hero-media{
   position:absolute;inset:0;
   background:
-    radial-gradient(120% 90% at 75% 20%,rgba(232,72,31,.28),transparent 55%),
-    radial-gradient(100% 100% at 10% 100%,rgba(209,52,31,.20),transparent 60%),
-    linear-gradient(180deg,#1a1a1e 0%,#0a0a0b 100%);
+    radial-gradient(120% 90% at 78% 15%,rgba(232,72,31,.30),transparent 52%),
+    linear-gradient(180deg,rgba(10,10,11,.30) 0%,rgba(10,10,11,.20) 35%,rgba(10,10,11,.72) 100%),
+    url("assets/hero.jpg") center 25% / cover no-repeat,
+    #0a0a0b;
+  filter:saturate(.92) contrast(1.05);
 }
 .hero-media::after{
-  /* subtle texture / motion lines */
-  content:"";position:absolute;inset:0;opacity:.5;
-  background-image:repeating-linear-gradient(115deg,rgba(255,255,255,.03) 0 2px,transparent 2px 26px);
+  /* subtle ember-tinted grade so the photo reads as brand, not stock */
+  content:"";position:absolute;inset:0;opacity:.35;mix-blend-mode:overlay;
+  background:radial-gradient(90% 70% at 70% 20%,rgba(232,72,31,.5),transparent 60%);
 }
 .hero-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,11,.35) 0%,rgba(10,10,11,.15) 40%,rgba(10,10,11,.85) 100%)}
 .hero-content{position:relative;padding-bottom:clamp(3rem,7vh,6rem);padding-top:6rem}
@@ -190,8 +192,17 @@ a{color:inherit;text-decoration:none}
   min-height:340px;display:flex;align-items:center;justify-content:center;overflow:hidden;
 }
 .beginner-media::after,.coaching-media::after{
-  content:"";position:absolute;inset:0;
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:radial-gradient(80% 80% at 70% 20%,rgba(232,72,31,.22),transparent 60%);
+}
+/* real photo inside a media container */
+.has-photo{background:#0a0a0b}
+.has-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.92) contrast(1.04)}
+.beginner-media.has-photo::after,.coaching-media.has-photo::after{
+  background:
+    radial-gradient(70% 70% at 75% 15%,rgba(232,72,31,.28),transparent 60%),
+    linear-gradient(180deg,rgba(10,10,11,0) 50%,rgba(10,10,11,.4));
+  mix-blend-mode:normal;
 }
 .ph-tag{
   position:relative;z-index:1;font-family:var(--font-cond);text-transform:uppercase;letter-spacing:.12em;
@@ -232,13 +243,14 @@ a{color:inherit;text-decoration:none}
 /* ---------- Community ---------- */
 .community-inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:center}
 .community-copy p:not(.kicker):not(.lead){color:rgba(255,255,255,.72);margin-top:1rem}
-.community-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.community-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;grid-auto-rows:1fr}
 .cph{
-  min-height:150px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;text-align:center;
-  font-family:var(--font-cond);text-transform:uppercase;letter-spacing:.1em;font-weight:600;font-size:.85rem;
-  color:rgba(255,255,255,.55);background:linear-gradient(135deg,#232329,#141418);border:1px dashed rgba(255,255,255,.15);
+  width:100%;height:100%;min-height:180px;object-fit:cover;border-radius:var(--r);display:block;
+  border:1px solid rgba(255,255,255,.08);
+  filter:saturate(.85) contrast(1.05) brightness(.94);
+  transition:filter .35s var(--ease),transform .35s var(--ease);
 }
-.cph:nth-child(odd){background:linear-gradient(135deg,#2a1d1b,#141418)}
+.cph:hover{filter:saturate(1) contrast(1.05) brightness(1);transform:translateY(-3px)}
 
 /* ---------- Why members ---------- */
 .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;margin-top:3rem}
@@ -262,18 +274,22 @@ a{color:inherit;text-decoration:none}
 /* ---------- Coaches ---------- */
 .coach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;margin-top:3rem}
 .coach-card{background:var(--charcoal);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;padding-bottom:1.6rem}
-.coach-photo{border-radius:0;min-height:280px;border:0;border-bottom:1px solid var(--line)}
+.coach-photo{border-radius:0;min-height:300px;border:0;border-bottom:1px solid var(--line);overflow:hidden}
+.coach-photo.has-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%;filter:grayscale(.1) contrast(1.05);transition:filter .35s var(--ease),transform .5s var(--ease)}
+.coach-card:hover .coach-photo.has-photo img{filter:grayscale(0) contrast(1.05);transform:scale(1.04)}
 .coach-card h3{font-family:var(--font-cond);text-transform:uppercase;letter-spacing:.04em;font-size:1.4rem;margin:1.2rem 1.6rem .2rem;color:#fff}
 .coach-role{margin:0 1.6rem .8rem;color:var(--ember-glow);font-family:var(--font-cond);text-transform:uppercase;letter-spacing:.06em;font-size:.9rem;font-weight:600}
 .coach-bio{margin:0 1.6rem;color:rgba(255,255,255,.65);font-size:.95rem}
 
 /* ---------- Facility ---------- */
-.facility-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem}
+.facility-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem;grid-auto-rows:1fr}
 .fph{
-  min-height:190px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;text-align:center;
-  font-family:var(--font-cond);text-transform:uppercase;letter-spacing:.1em;font-weight:600;font-size:.95rem;color:#8a8a92;
-  background:linear-gradient(135deg,#e7e6e2,#f4f3f0);border:1px dashed rgba(0,0,0,.15);
+  width:100%;height:100%;min-height:220px;object-fit:cover;border-radius:var(--r);display:block;
+  border:1px solid var(--line-dark);
+  filter:saturate(.9) contrast(1.04);
+  transition:filter .35s var(--ease),transform .35s var(--ease);
 }
+.fph:hover{filter:saturate(1.05) contrast(1.06);transform:translateY(-3px)}
 
 /* ---------- Amenities ---------- */
 .amenity-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;margin-top:3rem}
